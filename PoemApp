@@ -1,0 +1,51 @@
+import java.awt.*;
+import javax.swing.*;
+import java.awt.event.*;
+
+public class PoemApp extends JFrame  {
+  JComboBox<Integer> jcbRow, jcbColumn;
+  JButton btnGet;
+  JTextArea display;
+  String[][] poems;
+  public PoemApp() {
+    display = new JTextArea(8, 20);
+    poems = new String[][] { { "'Twas brillig, and the slythy toves\n", "Did gyre and gimble in the wabe;\n",
+      "All mimsy were the borogoves,\n", "And the mome raths outgrabe.\n" },
+    { "Humpty Dumpty sat on a wall,\n", "Humpty Dumpty had a great fall,\n",
+      "All the kings horses and all the kings men,\n", "Could not put Humpty together again.\n" } };
+    Integer[] rowValues =  { new Integer(0), new Integer(1) };
+    Integer[] colValues =  { new Integer(0), new Integer(1), new Integer(2), new Integer(3) };
+    jcbRow = new JComboBox<Integer>(rowValues);
+    jcbColumn = new JComboBox<Integer>(colValues);
+    btnGet = new JButton("Get");
+    btnGet.addActionListener(new MyListener());
+
+    JPanel commandpanel = new JPanel();
+    commandpanel.add(new JLabel("Select a poem by: "));
+    commandpanel.add(new JLabel("row index:"));
+    commandpanel.add(jcbRow);
+    commandpanel.add(new JLabel("column index:"));
+    commandpanel.add(jcbColumn);
+    commandpanel.add(btnGet);
+    JPanel southpanel = new JPanel();
+    southpanel.setLayout(new GridLayout(1, 2, 5, 5));
+    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    getContentPane().add(commandpanel, BorderLayout.NORTH);
+    getContentPane().add(display, BorderLayout.CENTER);
+    pack();
+    setVisible(true);
+  }
+  private class MyListener implements ActionListener{
+    //complete this
+	public void actionPerformed(ActionEvent e){
+		display.append((poems[jcbRow.getSelectedIndex()][jcbColumn.getSelectedIndex()]));
+  }
+  }
+  public static void main(String[] args) {
+    javax.swing.SwingUtilities.invokeLater(new Runnable() {
+      public void run() {
+        new PoemApp();
+      }
+    });
+  }
+}
